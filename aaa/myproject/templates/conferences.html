@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conferences</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #2e8b57;
+        background: linear-gradient(to right, #00bfff, #2e8b57);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .conferences-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .conference {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease-in-out;
+        flex: 0 0 calc(33.33% - 40px);
+        max-width: calc(33.33% - 40px);
+      }
+
+      .conference:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .conference h3 {
+        margin-top: 0;
+      }
+
+      .conference p {
+        margin-bottom: 10px;
+      }
+
+      .conference a {
+        color: blue;
+        text-decoration: none;
+      }
+
+      .conference a:hover {
+        text-decoration: underline;
+      }
+
+      .create-conference-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #2e8b57;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      .create-conference-link:hover {
+        background-color: #00bfff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Conferences</h1>
+      <div class="conferences-container">
+        {% for conference in conferences %}
+        <div class="conference">
+          <h3>{{ conference.title }}</h3>
+          <p><strong>Date:</strong> {{ conference.date }}</p>
+          <p><strong>Location:</strong> {{ conference.location }}</p>
+          <p>{{ conference.description }}</p>
+          <form
+            action="{% url 'register_conference' conference.id %}"
+            method="post"
+          >
+            {% csrf_token %}
+            <input type="submit" value="Register to The Conference" />
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+      <a href="{% url 'create_conference' %}" class="create-conference-link"
+        >Create New Conference</a
+      >
+    </div>
+  </body>
+</html>
