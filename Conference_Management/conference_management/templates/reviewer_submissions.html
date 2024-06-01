@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviewer Submissions</title>
+    <style>
+      /* CSS stilleri buraya gelecek */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #1bb4da; /* sayfa arka planı rengi */
+      }
+
+      .navbar {
+        background-color: #fff; /* navbar rengi */
+        overflow: hidden;
+        display: flex; /* flex container */
+        justify-content: space-around; /* içerikler arasında boşluk bırak */
+        align-items: center; /* dikeyde ortala */
+        padding: 10px 25px; /* navbar içeriğine boşluk ekle */
+        white-space: nowrap;
+      }
+
+      .navbar-links {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap; /* İçeriğin tek satırda kalmasını sağlar */
+      }
+
+      .navbar a {
+        color: #000;
+        font-size: 1.4rem;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        margin-left: 6px; /* içerikler arasında boşluk */
+        padding: 10px;
+      }
+
+      .navbar a.logo {
+        margin-right: auto; /* Sağa yaslanmış logo */
+        margin-left: 10px; /* Logo sol kenara yaslanacak */
+      }
+
+      .navbar a:hover {
+        background-color: #999; /* hover rengi */
+      }
+
+      .navbar a.logo:hover {
+        background-color: transparent; /* Logoda hover olduğunda arka plan rengini transparent yap */
+      }
+
+      .content {
+        text-align: center;
+        background-color: #1bb4da; /* tam dolu arka plan rengi */
+        color: #000;
+        padding: 50px 0;
+      }
+
+      .submission {
+        width: 300px;
+        background-color: #fff; /* kutucuk arka plan rengi */
+        border: 1px solid #ccc;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 5px; /* çerçeve radius'u */
+        transition: all 0.3s; /* tüm özelliklerde geçiş efekti */
+      }
+
+      .submission:hover {
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); /* hover efekti */
+        transform: scale(1.05); /* hover efekti */
+      }
+
+      .submission-info {
+        margin-bottom: 15px;
+      }
+
+      .blue-button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+
+      .blue-button:hover {
+        background-color: #0056b3;
+      }
+      h2 {
+        color: aliceblue;
+        font-size: 2rem;
+      }
+      .username {
+        font-size: 1.4rem;
+        display: inline-block;
+        align-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="#" class="logo">
+        <img
+          src="{% static 'iconfose2.png' %}"
+          width="25%"
+          height="70px"
+          alt="Logo"
+        />
+      </a>
+      <div class="navbar-links">
+        {% if user.is_authenticated %}
+        <span class="username"> {{ user.username }} </span>
+
+        {% if user.userprofile.role == 'Reviewer' %}
+
+        <a href="{% url 'reviewer_submissions' %}">Review Submissions</a>
+        {% endif %}
+        <a href="{% url 'conference_list' %}">Conferences</a>
+        <a href="{% url 'logout' %}">Logout</a>
+
+        {% else %}
+        <a href="{% url 'conference_list' %}">Conferences</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Reviewer Submissions</h2>
+      {% for submission in submissions %}
+      <div class="submission">
+        <div class="submission-info">
+          <strong>Paper:</strong>
+          <a href="{{ submission.paper.url }}">{{ submission.paper.name }}</a
+          ><br />
+        </div>
+        <!-- Review yazma bağlantısı -->
+        <a class="blue-button" href="{% url 'submit_review' submission.id %}"
+          >Write Review</a
+        >
+      </div>
+      {% empty %}
+      <p style="font-size: 1.3rem">No submissions assigned to you.</p>
+      {% endfor %}
+    </div>
+  </body>
+</html>

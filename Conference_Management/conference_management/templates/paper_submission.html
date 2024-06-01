@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Paper</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #1bb4da; /* sayfa arka planı rengi */
+      }
+
+      .navbar {
+        background-color: #fff; /* navbar rengi */
+        overflow: hidden;
+        display: flex; /* flex container */
+        justify-content: space-around; /* içerikler arasında boşluk bırak */
+        align-items: center; /* dikeyde ortala */
+        padding: 10px 25px; /* navbar içeriğine boşluk ekle */
+      }
+
+      .navbar-links {
+        display: flex; /* içerikler yatayda hizalansın */
+        align-items: center; /* dikeyde ortala */
+      }
+
+      .navbar a {
+        color: #000;
+        font-size: 1.4rem;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        margin-left: 6px; /* içerikler arasında boşluk */
+        padding: 10px;
+      }
+
+      .navbar a.logo {
+        margin-right: auto; /* diğer içeriklerin soluna yaslanmasını sağlar */
+      }
+
+      .navbar a:hover {
+        background-color: #999; /* hover rengi */
+      }
+
+      .navbar a.logo:hover {
+        background-color: transparent; /* Logoda hover olduğunda arka plan rengini transparent yap */
+      }
+
+      .content {
+        text-align: center;
+        background-color: #1bb4da; /* tam dolu arka plan rengi */
+        color: #000;
+        padding: 50px 0;
+      }
+
+      /* Form stilleri */
+      form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff; /* form arka plan rengi */
+        padding: 20px;
+        border-radius: 5px;
+        height: 200px;
+        font-size: 1.4rem;
+      }
+
+      form h2 {
+        margin-bottom: 20px;
+        color: #fff; /* başlık metni rengi */
+      }
+
+      form label {
+        display: block; /* Etiketleri blok öğeler haline getir */
+        margin-bottom: 10px; /* Her etiket arasına boşluk ekle */
+        font-weight: bold; /* Kalın font */
+        color: #000; /* etiket metni rengi */
+      }
+
+      form textarea {
+        width: 90%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        resize: none; /* Metin kutucuğunun boyutunu değiştirmeyi devre dışı bırak */
+      }
+
+      form button {
+        background-color: #007bff; /* Mavi buton rengi */
+        color: white; /* Metin rengi */
+        padding: 10px 20px; /* Buton içeriğine boşluk ekle */
+        border: none;
+        border-radius: 5px; /* Köşeleri yuvarla */
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+
+      form button:hover {
+        background-color: #0056b3; /* Hover rengi */
+      }
+
+      /* Başarı ve hata mesajları */
+      .success-message {
+        color: green;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      .error-message {
+        color: red;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+      form,
+      form label,
+      form p {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 auto;
+        padding-bottom: 5%;
+        top: 10%;
+      }
+      form input {
+        position: relative;
+        font-size: 1.4rem;
+        left: 20%;
+        padding-bottom: 3%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="{% url 'home' %}" class="logo">
+        <img
+          src="{% static 'iconfose2.png' %}"
+          width="25%"
+          height="70px"
+          alt="Logo"
+        />
+      </a>
+      <div class="navbar-links">
+        {% if user.is_authenticated %}
+        <span style="padding-left: 5px; font-size: 24px" class="username">
+          {{ user.username }}
+        </span>
+
+        {% if user.userprofile.role == 'Reviewer' %}
+
+        <a href="{% url 'reviewer_submissions' %}">Submissions</a>
+        {% endif %}
+        <a href="{% url 'conference_list' %}">Conferences</a>
+        <a href="{% url 'logout' %}">Logout</a>
+
+        {% else %}
+        <a href="{% url 'conference_list' %}">Conferences</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="content">
+      <h2 style="color: #fff; font-size: 2rem">Paper Submission</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p }}
+        <button
+          style="margin: 0 auto; position: relative; bottom: -10%"
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Paper</title>
+  </head>
+  <body>
+    <h2>Submit Paper</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html> -->

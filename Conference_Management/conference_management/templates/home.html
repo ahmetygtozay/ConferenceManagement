@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <style>
+      /* CSS styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #2753a3; /* sayfa arka planı rengi */
+      }
+
+      .navbar {
+        background-color: #fff; /* navbar rengi */
+        overflow: hidden;
+        display: flex; /* flex container */
+        justify-content: space-around; /* içerikler arasında boşluk bırak */
+        align-items: center; /* dikeyde ortala */
+        padding: 10px 25px; /* navbar içeriğine boşluk ekle */
+        white-space: nowrap;
+      }
+      .navbar-links {
+        display: flex; /* içerikler yatayda hizalansın */
+        margin-left: auto;
+        align-items: center; /* dikeyde ortala */
+      }
+
+      .navbar a {
+        color: #000;
+        font-size: 1.4rem;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        margin-left: 6px; /* içerikler arasında boşluk */
+        padding: 10px;
+      }
+
+      .navbar a.logo {
+        margin-right: auto; /* Sağa yaslanmış logo */
+        margin-left: 10px; /* Logo sol kenara yaslanacak */
+      }
+
+      .navbar a:hover {
+        background-color: #999; /* hover rengi */
+      }
+
+      .navbar a.logo:hover {
+        background-color: transparent; /* Logoda hover olduğunda arka plan rengini transparent yap */
+      }
+
+      .content {
+        text-align: center;
+        background-color: #2753a3; /* tam dolu arka plan rengi */
+        color: #fff;
+        padding: 50px 0;
+      }
+
+      .box {
+        width: 300px;
+        height: 225px;
+        background-color: #fff; /* kutucuk arka plan rengi */
+        border: 1px solid #ccc;
+        margin: 30px auto;
+        padding: 50px;
+        border-radius: 5px; /* çerçeve radius'u */
+        transition: all 0.3s; /* tüm özelliklerde geçiş efekti */
+        display: inline-block; /* kutucukların yatay durması */
+      }
+
+      /* Kutucukların içini doldur */
+      .box h3 {
+        color: #333; /* başlık rengi */
+        font-size: 1.5rem;
+      }
+
+      .box p {
+        color: #666; /* metin rengi */
+      }
+
+      /* Hover efekti */
+      .box:hover {
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); /* hover efekti */
+        transform: scale(1.05); /* hover efekti */
+      }
+      .box ul {
+        color: #000;
+        text-align: left;
+        font-size: 1.4rem;
+        list-style-type: circle;
+      }
+      .username {
+        font-size: 1.4rem;
+        display: inline-block;
+        align-content: center;
+      }
+
+      /* Media query for responsiveness */
+      @media screen and (max-width: 600px) {
+        .navbar {
+          flex-direction: column; /* mobilde sütun halinde göster */
+          align-items: flex-start; /* mobilde içerikleri sola hizala */
+        }
+
+        .navbar a {
+          margin: 10px 0; /* mobilde içerikler arasında boşluk */
+        }
+
+        .navbar a.logo {
+          margin-right: 0; /* mobilde logo marginını sıfırla */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="#" class="logo">
+        <img
+          src="{% static 'iconfose2.png' %}"
+          width="25%"
+          height="70px"
+          alt="Logo"
+        />
+      </a>
+      <div class="navbar-links">
+        {% if user.is_authenticated %}
+
+        <span class="username"> {{ user.username }} </span>
+
+        {% if user.userprofile.role == 'Reviewer' %}
+
+        <a href="{% url 'reviewer_submissions' %}">Reviewer Submissions</a>
+        {% endif %}
+        <a href="{% url 'conference_list' %}">Conferences</a>
+        <a href="{% url 'logout' %}">Logout</a>
+
+        {% else %}
+        <a href="{% url 'conference_list' %}">Conferences</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="content">
+      <h2 style="font-size: 2rem">
+        Seamless Conferences, Simplified in a Click...
+      </h2>
+      <div class="box">
+        <h3>Features</h3>
+        <ul>
+          <li>Online Registration</li>
+          <li>Paper Submission and Review Processing</li>
+          <li>Attendee Management</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Advantages</h3>
+        <ul>
+          <li>Efficiency</li>
+          <li>Accessibility</li>
+          <li>Enhanced Networking</li>
+          <li>Real-time Updates</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Customization</h3>
+        <ul>
+          <li>Content Management</li>
+          <li>Registration Options</li>
+          <li>Session Customization</li>
+          <li>Networking Features</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Security</h3>
+        <ul>
+          <li>Secure Authentication</li>
+          <li>Data Encryption</li>
+          <li>Privacy Controls</li>
+          <li>Secure Payment Processing</li>
+          <li>Security Updates</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Integration</h3>
+        <ul>
+          <li>Payment Gateways</li>
+          <li>Customer Relationship Management (CRM)</li>
+          <li>Content Management Systems (CMS)</li>
+          <li>Virtual Event Platforms</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

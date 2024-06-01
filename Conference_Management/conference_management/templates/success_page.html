@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  {%load static%}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Success Page</title>
+    <style>
+      /* CSS styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #1bb4da; /* sayfa arka planı rengi */
+      }
+
+      .navbar {
+        background-color: #fff; /* navbar rengi */
+        overflow: hidden;
+        display: flex; /* flex container */
+        justify-content: space-around; /* içerikler arasında boşluk bırak */
+        align-items: center; /* dikeyde ortala */
+        padding: 10px 25px; /* navbar içeriğine boşluk ekle */
+      }
+
+      .navbar-links {
+        display: flex; /* içerikler yatayda hizalansın */
+        margin-left: auto;
+        align-items: center; /* dikeyde ortala */
+      }
+      .navbar a {
+        color: #000;
+        font-size: 1.4rem;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        margin-left: 20px; /* içerikler arasında boşluk */
+        padding: 10px;
+      }
+
+      .navbar a.logo {
+        margin-right: auto; /* Sağa yaslanmış logo */
+        margin-left: 10px; /* Logo sol kenara yaslanacak */
+      }
+
+      .navbar a:hover {
+        background-color: #999; /* hover rengi */
+      }
+
+      .navbar a.logo:hover {
+        background-color: transparent; /* Logoda hover olduğunda arka plan rengini transparent yap */
+      }
+
+      h2,
+      p {
+        text-align: center;
+      }
+      .submission-card {
+        width: 300px;
+        height: 225px;
+        background-color: #fff; /* kutucuk arka plan rengi */
+        border: 1px solid #ccc;
+        margin: auto;
+        margin-top: 10%;
+        padding: 20px;
+        border-radius: 5px; /* çerçeve radius'u */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* hafif gölge */
+        transition: transform 0.3s ease; /* transform geçişi */
+      }
+      .username {
+        font-size: 1.4rem;
+        display: inline-block;
+        align-content: center;
+      }
+      button {
+        position: relative;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 auto; /* Butonu yatayda ortala */
+        display: block; /* Butonu blok öğe olarak ayarla */
+        font-size: 1rem;
+        margin-top: 15%;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="#" class="logo">
+        <img
+          src="{% static 'iconfose2.png' %}"
+          width="25%"
+          height="70px"
+          alt="Logo"
+        />
+      </a>
+      <div class="navbar-links">
+        <span class="username">{{user.username}}</span>
+        <a style="" href="{% url 'conference_list' %}">Conferences</a>
+        <a style="margin-right: 20px" href="{% url 'logout' %}">Logout</a>
+      </div>
+    </div>
+
+    <div class="submission-card">
+      <h2>File Submission</h2>
+      <p>Your paper has been successfully submitted!</p>
+      <button class="button">
+        <a
+          style="
+            display: block;
+            text-align: center;
+            font-size: 1.5rem;
+            color: #fff;
+            text-decoration: none;
+          "
+          href="{% url 'home' %}"
+        >
+          Home</a
+        >
+      </button>
+    </div>
+  </body>
+</html>
