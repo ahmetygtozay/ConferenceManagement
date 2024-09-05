@@ -17,7 +17,7 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 2. Proje dizinine gidin: `cd your-repository`
 3. Sanal ortam oluşturun ve etkinleştirin: `python3 -m venv env` ve `source env/bin/activate`
 4. Gerekli bağımlılıkları yükleyin: `pip install -r requirements.txt`
-5. Veritabanını göç edin: `python manage.py migrate`
+5. Veritabanını migrate edin: `python manage.py migrate`
 6. Sunucuyu başlatın: `python manage.py runserver`
 
 ## Katkıda Bulunma
